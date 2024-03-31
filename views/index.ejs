@@ -1,0 +1,131 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Items</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: inline;
+    }
+
+    .button-group {
+      margin-top: 20px;
+    }
+
+    .button-group button {
+      margin-right: 10px;
+    }
+
+    #updateFormContainer {
+      display: none;
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      padding: 8px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Items</h1>
+  <ul>
+    <% items.forEach(item=> { %>
+      <li>
+        <%= item.name %> - <%= item.description %>
+            <form action="/delete/<%= item._id %>" method="post">
+              <button type="submit">Delete</button>
+            </form>
+            <!-- Button to show update form -->
+            <button
+              onclick="showUpdateForm('<%= item._id %>', '<%= item.name %>', '<%= item.description %>')">Edit</button>
+      </li>
+      <% }); %>
+  </ul>
+
+  <!-- Update Item Form (Initially Hidden) -->
+  <div id="updateFormContainer">
+    <h2>Update Item</h2>
+    <form id="updateForm" action="" method="post">
+      <label for="updateName">Name:</label>
+      <input type="text" id="updateName" name="name" required><br>
+      <label for="updateDescription">Description:</label>
+      <textarea id="updateDescription" name="description" required></textarea><br>
+      <div class="button-group">
+        <button type="submit">Update Item</button>
+        <button type="button" onclick="cancelUpdate()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <h2>Add Item</h2>
+  <form action="/add" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+    <button type="submit">Add Item</button>
+  </form>
+
+  <script>
+    // Function to show update form with pre-filled values
+    function showUpdateForm(itemId, itemName, itemDescription) {
+      document.getElementById('updateForm').action = '/update/' + itemId;
+      document.getElementById('updateName').value = itemName;
+      document.getElementById('updateDescription').value = itemDescription;
+      document.getElementById('updateFormContainer').style.display = 'block';
+    }
+
+    // Function to cancel update and hide the update form
+    function cancelUpdate() {
+      document.getElementById('updateFormContainer').style.display = 'none';
+    }
+  </script>
+
+</body>
+
+</html>
