@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://wesley:SIFHlJNyk8HBZNZC@cluster0.gsiaa5p.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://wesley:IME7mqSZbZ2lASk4@cluster0.gsiaa5p.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
